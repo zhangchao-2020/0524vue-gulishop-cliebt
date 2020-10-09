@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {  //解析选项
+      "baseUrl": "./",    //从哪开始的
+      "paths": {
+          "@/*": ["src/*"]  //互相对应的
+      }
+    },
+    "exclude": ["node_modules", "dist"] //排除这两个
+}

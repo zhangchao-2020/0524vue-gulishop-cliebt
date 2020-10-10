@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <Footer></Footer>
+    <router-view></router-view>
+    <!-- <Footer v-show="!(this.$route.path==='/login' || this.$route.path==='/register')"></Footer> -->
+    <Footer v-show="!$route.meta.isHide"></Footer>
   </div>
 </template>
 

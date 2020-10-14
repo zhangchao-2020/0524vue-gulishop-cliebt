@@ -9,6 +9,20 @@ import Register from '@/pages/Register'
 import Search from '@/pages/Search'
 
 //2.必须往外暴露一个路由器对象
+//this.router.push   this.$router就是VueRouter的实例化对象
+
+const originPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function(location,onResolved,onRejected){
+    if(onResolved === undefined && onRejected === undefined){
+        //代表没有传递处理的回调无论时成功还是失败
+        return originPush.call(this,location).catch(() => {})
+    }else{
+        return originPush.call(this,location,onResolved,onRejected)
+    }
+   
+};
+//
 export default new VueRouter({
     routes:[
         {
@@ -32,8 +46,15 @@ export default new VueRouter({
 
         },
         {
-            path:'/search',
-            component:Search
+            path:'/search/:keyWord?',//代表这个params参数可传可不传
+            component:Search,  //把自己本身全部通过组件search全部传递过去
+            name:'search',
+            // params:{keyWord:'aa'},  //解析下面props传过来的参数
+            // query:{keyWord2:'AA'},
+            //props的第三种写法,props可写可不写, 主要是为了展示数据时方便
+            props(route){
+                return {keyWord:route.params.keyWord , keyWord2:route.query.keyWord2}
+            }
         },
         //重新指向
         {

@@ -7,7 +7,7 @@
                         <p>尚品汇欢迎您！</p>
                         <p>
                             <span>请</span>
-                            <router-link to="/login">登录</router-link>
+                            <router-link :to="{path:'/login'}">登录</router-link>
                             <!-- <a href="###">登录</a> -->
                             <router-link to="/register">免费注册</router-link>
                             <!-- <a href="###" class="register">免费注册</a> -->
@@ -37,7 +37,7 @@
                 </h1>
                 <div class="searchArea">
                     <form action="###" class="searchForm">
-                        <input type="text" id="autocomplete" class="input-error input-xxlarge" />
+                        <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyWord"/>
                         <button class="sui-btn btn-xlarge btn-danger" type="button" @click = 'toSearch'>搜索</button>
                     </form>
                 </div>
@@ -48,14 +48,43 @@
 <script>
 export default {
     name: 'Header',
+    data(){
+        return{
+            keyWord:'',
+        
+        }
+    },
     methods:{
         toSearch(){
-            this.$router.push('/search')
+            //1.字符串写法
+            //2.对象写法
+
+            //this.$router.push('/search')
+            //this.$router.push({path:'/search'})
+
+            //params参数能不能和path配合?
+            //字符串写法
+            //this.$router.push('/search/'+this.keyWord)
+            //对象写法
+            //this.$router.push({path:'/search/',params:{keyWord:this.keyWord}})  错的写法
+            
+            //this.$router.push({name:'Search',params:{keyWord:this.keyWord}})
+            //params参数的几个问题见笔记
+
+            let location = {    
+                name:"search",
+                params:{keyWord:this.keyWord || undefined },
+                query:{keyWord2:this.keyWord.toUpperCase()},
+            };
+            //this.$router.push(location).catch(()=>{});//后面push 可能要用多次,不能每次都.catch
+            this.$router.push(location)
+
         }
     }
 
+
 }
-</script>
+</script>``
 
 <style lang="less" scoped>
     .header {

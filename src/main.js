@@ -4,6 +4,11 @@ import router from '@/router'
 
 Vue.config.productionTip = false
 
+//全局注册的各种组件, 因为很多地方用到
+import TypeNav from "@/components/Type-Nav"  //引入
+Vue.component('TypeNav',TypeNav)  //定义带注册
+
+
 new Vue({
   el:'#app',
   render : h => h(App),
